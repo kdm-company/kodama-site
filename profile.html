@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロフィール｜こだま公式サイト</title>
+  <meta name="description" content="こだまの経歴、人柄、東大阪との関わりをご紹介します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* プロフィール固有 */
+    .profile-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+
+    .profile-photo-area {
+      background: linear-gradient(135deg, #0d3f72, #2471b8);
+      padding: 40px 24px 32px;
+      text-align: center;
+      position: relative;
+    }
+
+    .profile-photo-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 16px;
+      border: 4px solid rgba(255,255,255,0.4);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      text-align: center;
+    }
+
+    .profile-name {
+      font-size: 2rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.05em;
+    }
+
+    .profile-name-kana {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 4px;
+    }
+
+    .profile-tags {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .profile-tag {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .profile-data {
+      padding: 24px;
+    }
+
+    .profile-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .profile-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .profile-table th {
+      width: 30%;
+      padding: 12px 0;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.82rem;
+    }
+
+    .profile-table td {
+      padding: 12px 0 12px 12px;
+      font-weight: 700;
+    }
+
+    /* エピソードカード */
+    .episode-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      border-left: 4px solid var(--primary);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .episode-card h3 {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .episode-card p {
+      font-size: 0.92rem;
+      color: var(--text-sub);
+      line-height: 1.8;
+    }
+
+    /* 東大阪マップエリア */
+    .higashiosaka-section {
+      background: linear-gradient(135deg, #fff9e6, #fff3cc);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      border: 1px solid #ffe799;
+    }
+
+    .higashiosaka-section h3 {
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spot-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .spot-item {
+      background: white;
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid #ffe799;
+    }
+
+    .spot-item .spot-emoji {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .spot-item h4 {
+      font-size: 0.88rem;
+      font-weight: 900;
+      margin-bottom: 2px;
+    }
+
+    .spot-item p {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">こ<span>だ</span>ま</a>
+  <div class="nav-menu">
+    <a href="index.html">トップ</a>
+    <a href="profile.html" class="active">プロフィール</a>
+    <a href="vision.html">政治ビジョン</a>
+    <a href="history.html">選挙実績</a>
+    <a href="gourmet.html">グルメ</a>
+  </div>
+  <div class="nav-toggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ページヒーロー -->
+<div class="page-hero">
+  <p class="label">Profile</p>
+  <h1>こだまとは、<br>どんな人物か。</h1>
+  <p>経歴・人柄・東大阪への思い</p>
+</div>
+
+<!-- プロフィールカード -->
+<section class="section">
+  <div class="container">
+    <div class="profile-card">
+      <div class="profile-photo-area">
+        <div class="profile-photo-circle">
+          顔写真<br>準備中
+        </div>
+        <div class="profile-name">こだま</div>
+        <div class="profile-name-kana">（仮名・東大阪市選挙区）</div>
+        <div class="profile-tags">
+          <span class="profile-tag">📍 東大阪生まれ</span>
+          <span class="profile-tag">🏛️ 無所属</span>
+          <span class="profile-tag">🍜 グルメ好き</span>
+        </div>
+      </div>
+      <div class="profile-data">
+        <table class="profile-table">
+          <tr>
+            <th>出身</th>
+            <td>大阪府東大阪市</td>
+          </tr>
+          <tr>
+            <th>活動地域</th>
+            <td>東大阪市（布施・枚岡・河内地区を中心に）</td>
+          </tr>
+          <tr>
+            <th>学歴</th>
+            <td>大阪府内の高校・大学を卒業（詳細準備中）</td>
+          </tr>
+          <tr>
+            <th>職歴</th>
+            <td>地域企業での勤務を経て政治活動へ</td>
+          </tr>
+          <tr>
+            <th>趣味</th>
+            <td>東大阪グルメ巡り、地域イベントへの参加</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 経歴タイムライン -->
+    <p class="section-label">Career</p>
+    <h2 class="section-title"><em>こだまの歩み</em></h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="year">幼少期</p>
+        <h3>東大阪で生まれ、地元で育つ</h3>
+        <p>下町の活気ある商店街で育ち、ものづくりの街・東大阪の誇りを肌で感じながら成長。</p>
+      </div>
+      <div class="timeline-item">
+        <p class="year">学生時代</p>
+        <h3>地域活動への目覚め</h3>
+        <p>学生時代から地域のボランティア活動に参加。「自分たちの街は自分たちで作る」という意識が芽生える。</p>
+      </div>
+      <div class="timeline-item">
+        <p class="year">社会人</p>
+        <h3>地域企業・市民活動での経験を積む</h3>
+        <p>東大阪の中小企業に勤務しながら、町内会や商工会の活動を通じて地域の課題を実感。声を上げられない人々の存在に気づく。</p>
+      </div>
+      <div class="timeline-item">
+        <p class="year">政治を志す</p>
+        <h3>「変えるなら、自分が動くしかない」</h3>
+        <p>地域の声を届ける場所が必要だと確信し、政治の世界へ踏み出すことを決意。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 人柄エピソード -->
+<section class="section section-bg">
+  <div class="container">
+    <p class="section-label">Episodes</p>
+    <h2 class="section-title">こだまを語る<em>エピソード</em></h2>
+
+    <div class="episode-card">
+      <h3>🍜 グルメ巡りが政治の原点</h3>
+      <p>
+        週末に東大阪中の飲食店を食べ歩くのが趣味のこだま。「お店の人と話していると、街の本音が聞こえてくる」と言います。
+        補助金の使いにくさ、後継者問題、家賃の高騰——グルメ巡りは、地域の現場に触れる大切な時間です。
+      </p>
+    </div>
+
+    <div class="episode-card">
+      <h3>🏭 ものづくりの街への誇り</h3>
+      <p>
+        「東大阪は日本一の中小企業の集積地。でも、その技術を世界に届けられていない」と語るこだま。
+        地元企業の職人さんたちとの交流が、産業政策を考えるきっかけになりました。
+      </p>
+    </div>
+
+    <div class="episode-card">
+      <h3>👶 子育て世代との対話</h3>
+      <p>
+        公園や保育所の前に立ち、子育て世代の声を聞き続けてきました。「保育所に入れない」「放課後の居場所がない」——
+        当事者の言葉を直接聞くことが、政策を考えるうえで最も大切だと信じています。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 東大阪との関わり -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Higashiosaka</p>
+    <h2 class="section-title">東大阪への<em>想い</em></h2>
+
+    <p style="font-size:1rem;line-height:1.9;color:var(--text-sub);margin-bottom:28px;">
+      人口約49万人を抱える東大阪市。ラグビーの街として知られながら、実は世界シェアトップの部品を作る町工場が集まるものづくりの拠点でもあります。
+      そんな東大阪で生まれ育ったこだまにとって、この街は単なる「選挙区」ではなく、守り、育てたい場所です。
+    </p>
+
+    <div class="higashiosaka-section">
+      <h3>📍 こだまゆかりの東大阪スポット</h3>
+      <div class="spot-list">
+        <div class="spot-item">
+          <div class="spot-emoji">🏟️</div>
+          <h4>花園ラグビー場</h4>
+          <p>東大阪の誇り。地元の熱を感じる場所</p>
+        </div>
+        <div class="spot-item">
+          <div class="spot-emoji">🏭</div>
+          <h4>中小企業の工場群</h4>
+          <p>職人技と誇りが詰まった産業集積地</p>
+        </div>
+        <div class="spot-item">
+          <div class="spot-emoji">🚉</div>
+          <h4>布施商店街</h4>
+          <p>昔ながらの活気と地域のつながりが残る</p>
+        </div>
+        <div class="spot-item">
+          <div class="spot-emoji">⛩️</div>
+          <h4>石切劔箭神社</h4>
+          <p>地元に根ざした文化と信仰の場</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-name">こだま</div>
+    <div class="footer-sub">東大阪市 ／ 政治家個人サイト</div>
+    <nav class="footer-nav">
+      <a href="index.html">トップ</a>
+      <a href="profile.html">プロフィール</a>
+      <a href="vision.html">政治ビジョン</a>
+      <a href="history.html">選挙実績</a>
+      <a href="gourmet.html">こだまグルメ</a>
+    </nav>
+    <div class="footer-copy">© 2025 こだま All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('nav').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('nav');
+    if (!nav.contains(e.target)) nav.classList.remove('open');
+  });
+</script>
+</body>
+</html>

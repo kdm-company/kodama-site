@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>こだま｜東大阪から、あなたと一緒に。</title>
+  <meta name="description" content="東大阪を選挙区とする政治家・こだまの公式サイト。地元密着、誠実な政治を目指します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ===== トップページ固有スタイル ===== */
+
+    /* ファーストビュー */
+    .hero {
+      background: linear-gradient(160deg, #0d3f72 0%, #1a5c9a 50%, #2471b8 100%);
+      color: white;
+      padding: 60px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-area-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-layout {
+      display: flex;
+      align-items: flex-end;
+      gap: 28px;
+    }
+
+    .hero-photo {
+      width: 140px;
+      height: 175px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 3px solid rgba(255,255,255,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .hero-photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-name-en {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 4px;
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 10vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      margin-bottom: 16px;
+    }
+
+    .hero-name span {
+      display: block;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+
+    .hero-catch {
+      font-size: clamp(1rem, 3.5vw, 1.25rem);
+      font-weight: 700;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+
+    .hero-catch em {
+      color: #ffd966;
+      font-style: normal;
+    }
+
+    .hero-cta {
+      margin-top: 36px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ニュースバー */
+    .news-bar {
+      background: var(--primary);
+      color: white;
+      padding: 14px 20px;
+    }
+
+    .news-bar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .news-bar-label {
+      background: var(--accent);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .news-bar-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ナビカード */
+    .nav-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .nav-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      display: block;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .nav-card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .nav-card-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .nav-card-desc {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+    }
+
+    /* 最新情報 */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .news-item:hover {
+      border-color: var(--primary);
+    }
+
+    .news-date {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      font-weight: 700;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .news-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* SNSセクション */
+    .sns-section {
+      background: linear-gradient(135deg, var(--primary-light), #f0f4ff);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .sns-section h2 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .sns-section p {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      margin-bottom: 20px;
+    }
+
+    .sns-links-center {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* メッセージ */
+    .message-section {
+      background: var(--primary);
+      color: white;
+      padding: 56px 24px;
+    }
+
+    .message-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .message-quote {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 900;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .message-quote em {
+      color: #ffd966;
+      font-style: normal;
+    }
+
+    .message-text {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .message-sign {
+      font-size: 0.88rem;
+      opacity: 0.65;
+      font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+      .hero-layout {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .hero-photo {
+        width: 120px;
+        height: 150px;
+      }
+
+      .nav-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">こ<span>だ</span>ま</a>
+  <div class="nav-menu">
+    <a href="index.html" class="active">トップ</a>
+    <a href="profile.html">プロフィール</a>
+    <a href="vision.html">政治ビジョン</a>
+    <a href="history.html">選挙実績</a>
+    <a href="gourmet.html">グルメ</a>
+  </div>
+  <div class="nav-toggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ファーストビュー -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-area-tag">
+      📍 東大阪から、日本を変える
+    </div>
+    <div class="hero-layout">
+      <div class="hero-photo photo-placeholder" style="background: linear-gradient(135deg,#2471b8,#0d3f72);">
+        <!-- 顔写真をここに差し替え -->
+        <!-- <img src="images/kodama.jpg" alt="こだま" class="hero-photo-img"> -->
+        <div style="text-align:center;color:rgba(255,255,255,0.6);font-size:0.75rem;padding:12px;">
+          顔写真<br>準備中
+        </div>
+      </div>
+      <div class="hero-text">
+        <p class="hero-name-en">Kodama Official</p>
+        <h1 class="hero-name">
+          <span>政治家</span>こだま
+        </h1>
+        <p class="hero-catch">
+          <em>東大阪の声</em>を、<br>
+          政治の力に変える。
+        </p>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="profile.html" class="btn" style="background:white;color:var(--primary);font-weight:900;">
+        こだまを知る →
+      </a>
+      <a href="vision.html" class="btn" style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);">
+        政治ビジョン
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ニュースバー -->
+<div class="news-bar">
+  <div class="news-bar-inner">
+    <span class="news-bar-label">NEW</span>
+    <span class="news-bar-text">東大阪市内の街頭活動レポートを公開しました</span>
+  </div>
+</div>
+
+<!-- ページ導線 -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Site Navigation</p>
+    <h2 class="section-title">サイトメニュー</h2>
+    <div class="nav-cards">
+      <a href="profile.html" class="nav-card">
+        <div class="nav-card-icon">👤</div>
+        <div class="nav-card-title">プロフィール</div>
+        <div class="nav-card-desc">こだまの経歴・人柄・地元との関わり</div>
+      </a>
+      <a href="vision.html" class="nav-card">
+        <div class="nav-card-icon">🏛️</div>
+        <div class="nav-card-title">政治ビジョン</div>
+        <div class="nav-card-desc">主張・政策の方向性・なぜ政治を志すのか</div>
+      </a>
+      <a href="history.html" class="nav-card">
+        <div class="nav-card-icon">📋</div>
+        <div class="nav-card-title">選挙実績</div>
+        <div class="nav-card-desc">過去の選挙・活動の記録</div>
+      </a>
+      <a href="gourmet.html" class="nav-card">
+        <div class="nav-card-icon">🍜</div>
+        <div class="nav-card-title">こだまグルメ</div>
+        <div class="nav-card-desc">東大阪の美味しいお店を紹介</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- こだまからのメッセージ -->
+<div class="message-section">
+  <div class="message-inner">
+    <p class="message-quote">
+      「<em>普通の人の声</em>が、<br>
+      政治に届かない社会を<br>
+      変えたい。」
+    </p>
+    <p class="message-text">
+      東大阪に生まれ、この街で育ちました。商店街の活気、ものづくりの誇り、子育て世代の不安——<br>
+      そのすべてを肌で知っているからこそ、私は立ちました。<br>
+      難しい言葉ではなく、行動で示す政治を目指します。
+    </p>
+    <p class="message-sign">— こだま</p>
+    <div style="margin-top:24px;">
+      <a href="profile.html" class="btn" style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);">
+        もっと読む
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- 最新情報 -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Latest News</p>
+    <h2 class="section-title">最新情報</h2>
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">2025.11.15</span>
+        <span class="news-title">布施駅前で街頭演説を行いました</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025.10.28</span>
+        <span class="news-title">東大阪市立小学校の授業参観に参加しました</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025.10.12</span>
+        <span class="news-title">地元商工会議所との意見交換会に出席しました</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025.09.30</span>
+        <span class="news-title">Instagram アカウントを開設しました</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SNS -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="sns-section">
+      <h2>SNSでも発信中</h2>
+      <p>日々の活動・東大阪グルメ情報を随時更新しています</p>
+      <div class="sns-links-center">
+        <a href="https://www.instagram.com/kodama.gourmet/" target="_blank" class="sns-link instagram">
+          📷 Instagram
+        </a>
+        <a href="#" class="sns-link x">
+          𝕏 X (Twitter)
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-name">こだま</div>
+    <div class="footer-sub">東大阪市 ／ 政治家個人サイト</div>
+    <nav class="footer-nav">
+      <a href="index.html">トップ</a>
+      <a href="profile.html">プロフィール</a>
+      <a href="vision.html">政治ビジョン</a>
+      <a href="history.html">選挙実績</a>
+      <a href="gourmet.html">こだまグルメ</a>
+    </nav>
+    <div class="footer-copy">© 2025 こだま All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('nav').classList.toggle('open');
+  }
+  // ナビ外クリックで閉じる
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('nav');
+    if (!nav.contains(e.target)) {
+      nav.classList.remove('open');
+    }
+  });
+</script>
+</body>
+</html>

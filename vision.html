@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>政治ビジョン｜こだま公式サイト</title>
+  <meta name="description" content="こだまの政治的な考え方・ビジョン・政策の方向性をご紹介します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ビジョン固有 */
+
+    /* なぜ政治を志すか */
+    .why-section {
+      background: linear-gradient(160deg, #0d3f72 0%, #1a5c9a 100%);
+      color: white;
+      padding: 64px 24px;
+    }
+
+    .why-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .why-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+
+    .why-quote {
+      font-size: clamp(1.4rem, 4.5vw, 2rem);
+      font-weight: 900;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .why-quote em {
+      color: #ffd966;
+      font-style: normal;
+    }
+
+    .why-body {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      opacity: 0.88;
+    }
+
+    .why-body p + p {
+      margin-top: 16px;
+    }
+
+    /* ビジョンカード */
+    .vision-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .vision-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      gap: 0;
+    }
+
+    .vision-card-accent {
+      width: 6px;
+      background: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .vision-card-body {
+      padding: 20px 20px 20px 18px;
+      flex: 1;
+    }
+
+    .vision-card-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .vision-card-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .vision-card-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.8;
+    }
+
+    .vision-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .vision-card-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* 3つの約束 */
+    .promise-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .promise-item {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--primary);
+    }
+
+    .promise-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .promise-title {
+      font-size: 0.88rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .promise-desc {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    /* 対話型Q&A */
+    .qa-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: white;
+    }
+
+    .qa-q {
+      padding: 16px 20px;
+      background: var(--primary-light);
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: var(--primary);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .qa-q::before {
+      content: 'Q';
+      font-size: 0.8rem;
+      background: var(--primary);
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 900;
+    }
+
+    .qa-a {
+      padding: 16px 20px;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      line-height: 1.8;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .qa-a::before {
+      content: 'A';
+      font-size: 0.8rem;
+      background: var(--accent);
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 900;
+    }
+
+    @media (max-width: 480px) {
+      .promise-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">こ<span>だ</span>ま</a>
+  <div class="nav-menu">
+    <a href="index.html">トップ</a>
+    <a href="profile.html">プロフィール</a>
+    <a href="vision.html" class="active">政治ビジョン</a>
+    <a href="history.html">選挙実績</a>
+    <a href="gourmet.html">グルメ</a>
+  </div>
+  <div class="nav-toggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ページヒーロー -->
+<div class="page-hero">
+  <p class="label">Vision & Policy</p>
+  <h1>なぜ、私は<br>政治を志すのか。</h1>
+  <p>主張・ビジョン・政策の方向性</p>
+</div>
+
+<!-- なぜ政治を志すか -->
+<div class="why-section">
+  <div class="why-inner">
+    <p class="why-label">Why Politics?</p>
+    <p class="why-quote">
+      「<em>声を上げられない人の隣に</em>、<br>
+      政治家が立つべきだと思った。」
+    </p>
+    <div class="why-body">
+      <p>
+        私はずっと、東大阪で生きてきました。町工場の社長が後継者問題で眠れない夜を過ごしていること、
+        子どもを保育所に入れられないお母さんが泣いていること、
+        高齢の親の介護と仕事の両立に限界を感じている人がいること——
+        そういうリアルを、この街で見てきました。
+      </p>
+      <p>
+        政治は「遠いもの」だと思っている人が多い。でも、生活を決めているのは政治です。
+        誰もが「どうせ変わらない」と諦める前に、変えようとする人間が必要だと思いました。
+        それが、私が政治の世界に踏み込んだ理由です。
+      </p>
+      <p>
+        難しいことばは要りません。この街の、この人たちのために、動き続ける。
+        それだけを考えています。
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- 政策ビジョン -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Policy Vision</p>
+    <h2 class="section-title">こだまが取り組む<em>５つのテーマ</em></h2>
+    <div class="vision-cards">
+
+      <div class="vision-card">
+        <div class="vision-card-accent"></div>
+        <div class="vision-card-body">
+          <p class="vision-card-num">01</p>
+          <h3 class="vision-card-title">🏭 ものづくり産業の継承と発展</h3>
+          <p class="vision-card-desc">
+            東大阪には世界レベルの技術を持つ中小企業が集積しています。しかし後継者不足・資金繰り・販路開拓など、多くの課題を抱えています。職人の技術を守り、次の世代に引き継ぐための具体的な支援策を進めます。
+          </p>
+          <div class="vision-card-tags">
+            <span class="vision-card-tag">中小企業支援</span>
+            <span class="vision-card-tag">後継者育成</span>
+            <span class="vision-card-tag">販路開拓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-card-accent" style="background:var(--accent);"></div>
+        <div class="vision-card-body">
+          <p class="vision-card-num" style="color:var(--accent);">02</p>
+          <h3 class="vision-card-title">👶 子育て・教育環境の充実</h3>
+          <p class="vision-card-desc">
+            「子どもを産みたい」「育てやすい街にしたい」という声に応えます。保育所の拡充、学校教育の質向上、放課後の居場所づくりなど、子どもが安心して育てられる環境を整えます。
+          </p>
+          <div class="vision-card-tags">
+            <span class="vision-card-tag" style="background:var(--accent-light);color:var(--accent);">保育所拡充</span>
+            <span class="vision-card-tag" style="background:var(--accent-light);color:var(--accent);">教育支援</span>
+            <span class="vision-card-tag" style="background:var(--accent-light);color:var(--accent);">放課後施設</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-card-accent" style="background:#2db84b;"></div>
+        <div class="vision-card-body">
+          <p class="vision-card-num" style="color:#2db84b;">03</p>
+          <h3 class="vision-card-title">🏘️ 地域コミュニティの再生</h3>
+          <p class="vision-card-desc">
+            高齢化・人口減少が進む中、地域のつながりが薄れています。商店街の活性化、空き家の活用、高齢者と若者が混ざり合える場所づくりで、東大阪を「住みたい街」に変えます。
+          </p>
+          <div class="vision-card-tags">
+            <span class="vision-card-tag" style="background:#edfbf2;color:#2db84b;">商店街活性化</span>
+            <span class="vision-card-tag" style="background:#edfbf2;color:#2db84b;">空き家活用</span>
+            <span class="vision-card-tag" style="background:#edfbf2;color:#2db84b;">多世代交流</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-card-accent" style="background:#f5a623;"></div>
+        <div class="vision-card-body">
+          <p class="vision-card-num" style="color:#f5a623;">04</p>
+          <h3 class="vision-card-title">🧓 介護・高齢者福祉の強化</h3>
+          <p class="vision-card-desc">
+            「老後が不安」という声は、東大阪の多くの家庭から届いています。介護施設の拡充、在宅介護への支援、介護職の処遇改善に取り組み、安心して年を重ねられる街を目指します。
+          </p>
+          <div class="vision-card-tags">
+            <span class="vision-card-tag" style="background:#fff8ed;color:#f5a623;">介護施設拡充</span>
+            <span class="vision-card-tag" style="background:#fff8ed;color:#f5a623;">在宅支援</span>
+            <span class="vision-card-tag" style="background:#fff8ed;color:#f5a623;">処遇改善</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-card-accent" style="background:#9b59b6;"></div>
+        <div class="vision-card-body">
+          <p class="vision-card-num" style="color:#9b59b6;">05</p>
+          <h3 class="vision-card-title">💬 開かれた政治・行政の実現</h3>
+          <p class="vision-card-desc">
+            政治は「わかりにくいもの」ではなくなるべきです。活動の透明性を高め、SNSや対話集会を通じて市民との直接的なコミュニケーションを続けます。情報公開と説明責任を徹底します。
+          </p>
+          <div class="vision-card-tags">
+            <span class="vision-card-tag" style="background:#f5eeff;color:#9b59b6;">情報公開</span>
+            <span class="vision-card-tag" style="background:#f5eeff;color:#9b59b6;">対話重視</span>
+            <span class="vision-card-tag" style="background:#f5eeff;color:#9b59b6;">説明責任</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 3つの約束 -->
+<section class="section section-bg">
+  <div class="container">
+    <p class="section-label">Pledge</p>
+    <h2 class="section-title">こだまの<em>3つの約束</em></h2>
+    <div class="promise-grid">
+      <div class="promise-item">
+        <div class="promise-icon">👂</div>
+        <div class="promise-title">聞く</div>
+        <p class="promise-desc">先に答えを出さない。まず現場の声を聞くことから始める。</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">🏃</div>
+        <div class="promise-title">動く</div>
+        <p class="promise-desc">言葉より行動。現場に足を運び、自分の目で確かめる。</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">📣</div>
+        <div class="promise-title">伝える</div>
+        <p class="promise-desc">活動を正直に公開する。わかりやすい言葉で、隠さず報告する。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- よくある質問 -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-title">こだまへの<em>よくある質問</em></h2>
+
+    <div class="qa-item">
+      <div class="qa-q">どの政党に所属していますか？</div>
+      <div class="qa-a">現在は無所属として活動しています。特定の党に縛られず、東大阪の市民の声を第一に考える姿勢を大切にしています。</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">なぜ東大阪なのですか？</div>
+      <div class="qa-a">生まれ育った地元だからです。この街の課題は他人事ではなく、自分自身の問題として向き合えます。</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">支援・応援するにはどうすればいいですか？</div>
+      <div class="qa-a">SNSのフォローや街頭活動への参加が一番の力になります。まずはInstagramをフォローしてください。</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">直接話を聞く機会はありますか？</div>
+      <div class="qa-a">定期的に街頭演説や対話集会を開催しています。最新情報はSNSでご確認ください。</div>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-name">こだま</div>
+    <div class="footer-sub">東大阪市 ／ 政治家個人サイト</div>
+    <nav class="footer-nav">
+      <a href="index.html">トップ</a>
+      <a href="profile.html">プロフィール</a>
+      <a href="vision.html">政治ビジョン</a>
+      <a href="history.html">選挙実績</a>
+      <a href="gourmet.html">こだまグルメ</a>
+    </nav>
+    <div class="footer-copy">© 2025 こだま All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('nav').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('nav');
+    if (!nav.contains(e.target)) nav.classList.remove('open');
+  });
+</script>
+</body>
+</html>

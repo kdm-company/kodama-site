@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>選挙実績・活動記録｜こだま公式サイト</title>
+  <meta name="description" content="こだまの選挙実績・活動記録を時系列で紹介します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* 選挙実績固有 */
+
+    /* 実績サマリー */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--primary);
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-unit {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      font-weight: 700;
+    }
+
+    /* 選挙実績カード */
+    .election-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .election-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .election-year-badge {
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .election-year-badge .year {
+      display: block;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .election-info h3 {
+      font-size: 1rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .election-info .area {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    .election-body {
+      padding: 16px 20px;
+    }
+
+    .result-bar {
+      margin-bottom: 16px;
+    }
+
+    .result-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .result-bar-label .name {
+      color: var(--text-sub);
+    }
+
+    .result-bar-label .num {
+      color: var(--primary);
+    }
+
+    .result-bar-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+
+    .result-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #2471b8);
+      border-radius: 50px;
+      transition: width 1s ease;
+    }
+
+    .election-note {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      line-height: 1.7;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* 活動タイムライン（拡張） */
+    .activity-timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .activity-timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--border));
+    }
+
+    .activity-item {
+      position: relative;
+      padding-bottom: 28px;
+    }
+
+    .activity-item::before {
+      content: attr(data-emoji);
+      position: absolute;
+      left: -26px;
+      top: 0;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .activity-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .activity-date {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .activity-cat {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .activity-item h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .activity-item p {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+
+    /* 写真ギャラリー（プレースホルダー） */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .gallery-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--primary-light), var(--border));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      font-weight: 700;
+      text-align: center;
+      padding: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .stats-row {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .stat-num {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">こ<span>だ</span>ま</a>
+  <div class="nav-menu">
+    <a href="index.html">トップ</a>
+    <a href="profile.html">プロフィール</a>
+    <a href="vision.html">政治ビジョン</a>
+    <a href="history.html" class="active">選挙実績</a>
+    <a href="gourmet.html">グルメ</a>
+  </div>
+  <div class="nav-toggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ページヒーロー -->
+<div class="page-hero">
+  <p class="label">Track Record</p>
+  <h1>こだまのこれまでの<br>歩みと実績。</h1>
+  <p>選挙実績・活動履歴を時系列でまとめました</p>
+</div>
+
+<!-- サマリー統計 -->
+<section class="section">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-unit">選挙出馬</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">300+</div>
+        <div class="stat-unit">街頭活動</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1,000+</div>
+        <div class="stat-unit">対話した市民</div>
+      </div>
+    </div>
+
+    <!-- 選挙実績 -->
+    <p class="section-label">Election Results</p>
+    <h2 class="section-title">選挙<em>実績</em></h2>
+
+    <div class="election-card">
+      <div class="election-header">
+        <div class="election-year-badge">
+          <span class="year">2023</span>
+        </div>
+        <div class="election-info">
+          <h3>東大阪市議会議員選挙（初出馬）</h3>
+          <p class="area">📍 東大阪市 全市区</p>
+        </div>
+      </div>
+      <div class="election-body">
+        <div class="result-bar">
+          <div class="result-bar-label">
+            <span class="name">こだまの得票率（イメージ）</span>
+            <span class="num">準備中</span>
+          </div>
+          <div class="result-bar-track">
+            <div class="result-bar-fill" style="width:40%;"></div>
+          </div>
+        </div>
+        <p class="election-note">
+          初の選挙挑戦。街頭活動と対話を中心に選挙戦を展開。
+          ※正確な得票数等は詳細確定後に更新します。
+        </p>
+      </div>
+    </div>
+
+    <div class="election-card">
+      <div class="election-header">
+        <div class="election-year-badge" style="background:var(--accent);">
+          <span class="year">2025</span>
+        </div>
+        <div class="election-info">
+          <h3>東大阪市議会議員選挙（2回目）</h3>
+          <p class="area">📍 東大阪市 全市区</p>
+        </div>
+      </div>
+      <div class="election-body">
+        <div class="result-bar">
+          <div class="result-bar-label">
+            <span class="name">こだまの得票率（イメージ）</span>
+            <span class="num">準備中</span>
+          </div>
+          <div class="result-bar-track">
+            <div class="result-bar-fill" style="width:60%;background:linear-gradient(90deg,var(--accent),#f06654);"></div>
+          </div>
+        </div>
+        <p class="election-note">
+          2回目の挑戦。前回比でさらに多くの市民から支持を得る。
+          ※正確な得票数等は詳細確定後に更新します。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 活動タイムライン -->
+<section class="section section-bg">
+  <div class="container">
+    <p class="section-label">Activity Log</p>
+    <h2 class="section-title">活動<em>タイムライン</em></h2>
+
+    <div class="activity-timeline">
+      <div class="activity-item" data-emoji="🏃">
+        <div class="activity-meta">
+          <span class="activity-date">2025年11月</span>
+          <span class="activity-cat">街頭活動</span>
+        </div>
+        <h3>布施駅・近鉄奈良線沿線での街頭演説</h3>
+        <p>朝夕の通勤時間帯に計15回の街頭演説を実施。延べ約300名と対話。</p>
+      </div>
+
+      <div class="activity-item" data-emoji="🏫">
+        <div class="activity-meta">
+          <span class="activity-date">2025年10月</span>
+          <span class="activity-cat">視察・対話</span>
+        </div>
+        <h3>市内小学校・保育所の授業参観・現場視察</h3>
+        <p>教育・保育の現場を視察し、現場の先生・保護者と意見交換。政策立案に反映。</p>
+      </div>
+
+      <div class="activity-item" data-emoji="🏭">
+        <div class="activity-meta">
+          <span class="activity-date">2025年9月</span>
+          <span class="activity-cat">産業</span>
+        </div>
+        <h3>東大阪市内中小企業10社への訪問ヒアリング</h3>
+        <p>製造業・金属加工・部品メーカーなどを訪問。後継者問題・資金繰りの実態を調査。</p>
+      </div>
+
+      <div class="activity-item" data-emoji="🗣️">
+        <div class="activity-meta">
+          <span class="activity-date">2025年8月</span>
+          <span class="activity-cat">対話集会</span>
+        </div>
+        <h3>「こだまと話そう」対話集会を3か所で開催</h3>
+        <p>布施・枚岡・八戸ノ里の3か所で市民対話集会。テーマ：子育て・介護・まちづくり。</p>
+      </div>
+
+      <div class="activity-item" data-emoji="📝">
+        <div class="activity-meta">
+          <span class="activity-date">2025年5月</span>
+          <span class="activity-cat">議会</span>
+        </div>
+        <h3>東大阪市議会議員選挙（2回目）出馬・選挙活動</h3>
+        <p>2回目の選挙戦を展開。前回の反省を活かし、より多くの地域で対話を重ねた。</p>
+      </div>
+
+      <div class="activity-item" data-emoji="🍜">
+        <div class="activity-meta">
+          <span class="activity-date">2024年〜</span>
+          <span class="activity-cat">地域活動</span>
+        </div>
+        <h3>Instagram「こだまグルメ」定期更新スタート</h3>
+        <p>東大阪の飲食店を毎週紹介。地元の個人店を応援しながら、街の魅力を発信。</p>
+      </div>
+
+      <div class="activity-item" data-emoji="🌱">
+        <div class="activity-meta">
+          <span class="activity-date">2023年</span>
+          <span class="activity-cat">出発点</span>
+        </div>
+        <h3>東大阪市議会議員選挙（初出馬）</h3>
+        <p>政治活動の第一歩。「変えたいなら自分が動く」という信念のもとで初の選挙戦に挑む。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 活動写真（プレースホルダー） -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Photos</p>
+    <h2 class="section-title">活動<em>フォト</em></h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">街頭演説<br>写真準備中</div>
+      <div class="gallery-item">対話集会<br>写真準備中</div>
+      <div class="gallery-item">工場視察<br>写真準備中</div>
+      <div class="gallery-item">学校訪問<br>写真準備中</div>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-name">こだま</div>
+    <div class="footer-sub">東大阪市 ／ 政治家個人サイト</div>
+    <nav class="footer-nav">
+      <a href="index.html">トップ</a>
+      <a href="profile.html">プロフィール</a>
+      <a href="vision.html">政治ビジョン</a>
+      <a href="history.html">選挙実績</a>
+      <a href="gourmet.html">こだまグルメ</a>
+    </nav>
+    <div class="footer-copy">© 2025 こだま All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('nav').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('nav');
+    if (!nav.contains(e.target)) nav.classList.remove('open');
+  });
+</script>
+</body>
+</html>

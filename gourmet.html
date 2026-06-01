@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>こだまグルメ｜東大阪の美味しいお店</title>
+  <meta name="description" content="こだまが足で歩いて見つけた、東大阪のおすすめグルメを紹介します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Instagram埋め込み -->
+  <script async src="//www.instagram.com/embed.js"></script>
+  <style>
+    /* グルメページ固有 */
+
+    .gourmet-hero {
+      background: linear-gradient(160deg, #ff7043 0%, #e8483d 50%, #c0392b 100%);
+      color: white;
+      padding: 60px 24px 80px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .gourmet-hero::before {
+      content: '🍜';
+      position: absolute;
+      font-size: 20rem;
+      opacity: 0.05;
+      top: -60px;
+      right: -40px;
+      line-height: 1;
+    }
+
+    .gourmet-hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gourmet-hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 50px;
+      padding: 5px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    .gourmet-hero h1 {
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .gourmet-hero p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    /* カテゴリータブ */
+    .category-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 24px;
+      scrollbar-width: none;
+    }
+
+    .category-tabs::-webkit-scrollbar { display: none; }
+
+    .cat-tab {
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 2px solid var(--border);
+      background: white;
+      color: var(--text-sub);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .cat-tab.active, .cat-tab:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    /* グルメカード */
+    .gourmet-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .gourmet-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      gap: 0;
+    }
+
+    .gourmet-card-photo {
+      width: 110px;
+      min-height: 110px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #ffe0d0, #ffb89a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .gourmet-card-body {
+      padding: 14px 16px;
+      flex: 1;
+    }
+
+    .gourmet-card-meta {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .gourmet-cat-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .gourmet-area-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .gourmet-card-name {
+      font-size: 1rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .gourmet-card-desc {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    .gourmet-card-comment {
+      margin-top: 8px;
+      padding: 8px 10px;
+      background: var(--bg-off);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      border-left: 3px solid var(--accent);
+    }
+
+    .gourmet-card-comment::before {
+      content: '🗣 こだまより：';
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Instagram埋め込みセクション */
+    .instagram-section {
+      background: linear-gradient(135deg, #f8e8ff, #fce4f0, #ffe8e8);
+      padding: 48px 24px;
+    }
+
+    .instagram-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .instagram-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .instagram-header h2 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .instagram-header p {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    .instagram-handle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+
+    .instagram-embed-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    /* Instagram埋め込みレスポンシブ対応 */
+    .instagram-media {
+      max-width: 100% !important;
+      min-width: unset !important;
+    }
+
+    .instagram-posts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .instagram-post-embed {
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    /* こだまグルメマップ */
+    .map-section {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .map-section h3 {
+      font-size: 1rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .area-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .area-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px;
+      background: var(--bg-off);
+      border-radius: 10px;
+    }
+
+    .area-num {
+      background: var(--accent);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .area-info h4 {
+      font-size: 0.9rem;
+      font-weight: 900;
+      margin-bottom: 2px;
+    }
+
+    .area-info p {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">こ<span>だ</span>ま</a>
+  <div class="nav-menu">
+    <a href="index.html">トップ</a>
+    <a href="profile.html">プロフィール</a>
+    <a href="vision.html">政治ビジョン</a>
+    <a href="history.html">選挙実績</a>
+    <a href="gourmet.html" class="active">グルメ</a>
+  </div>
+  <div class="nav-toggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- グルメヒーロー -->
+<div class="gourmet-hero">
+  <div class="gourmet-hero-inner">
+    <p class="gourmet-hero-badge">🍜 KODAMA GOURMET</p>
+    <h1>東大阪の<br>うまいもん、全部食べたい。</h1>
+    <p>こだまが実際に足を運んだお店だけを紹介します</p>
+    <div style="margin-top:24px;">
+      <a href="https://www.instagram.com/kodama.gourmet/" target="_blank" class="sns-link instagram" style="display:inline-flex;">
+        📷 Instagram @kodama.gourmet をフォロー
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- カテゴリータブ -->
+<section class="section" style="padding-bottom:0;">
+  <div class="container">
+    <div class="category-tabs">
+      <button class="cat-tab active">すべて</button>
+      <button class="cat-tab">ラーメン</button>
+      <button class="cat-tab">焼肉</button>
+      <button class="cat-tab">居酒屋</button>
+      <button class="cat-tab">カフェ</button>
+      <button class="cat-tab">お好み焼き</button>
+      <button class="cat-tab">定食</button>
+    </div>
+  </div>
+</section>
+
+<!-- グルメカード一覧 -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Recommended</p>
+    <h2 class="section-title">こだまの<em>おすすめ</em></h2>
+    <div class="gourmet-grid">
+
+      <div class="gourmet-card">
+        <div class="gourmet-card-photo">🍜</div>
+        <div class="gourmet-card-body">
+          <div class="gourmet-card-meta">
+            <span class="gourmet-cat-badge">ラーメン</span>
+            <span class="gourmet-area-badge">布施エリア</span>
+          </div>
+          <div class="gourmet-card-name">（店舗情報準備中）</div>
+          <div class="gourmet-card-desc">東大阪ならではのこってりスープ。地元の常連で賑わう一杯。</div>
+          <div class="gourmet-card-comment">地元の職人さんに教えてもらった隠れ名店。並んでも食べる価値あり。</div>
+        </div>
+      </div>
+
+      <div class="gourmet-card">
+        <div class="gourmet-card-photo" style="background:linear-gradient(135deg,#ffe0e0,#ffb8b8);">🥩</div>
+        <div class="gourmet-card-body">
+          <div class="gourmet-card-meta">
+            <span class="gourmet-cat-badge">焼肉</span>
+            <span class="gourmet-area-badge">河内エリア</span>
+          </div>
+          <div class="gourmet-card-name">（店舗情報準備中）</div>
+          <div class="gourmet-card-desc">地元に愛される老舗焼肉店。コスパ抜群でファミリーにも人気。</div>
+          <div class="gourmet-card-comment">選挙活動の打ち上げにも使わせてもらっています（笑）本当においしい。</div>
+        </div>
+      </div>
+
+      <div class="gourmet-card">
+        <div class="gourmet-card-photo" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">🥢</div>
+        <div class="gourmet-card-body">
+          <div class="gourmet-card-meta">
+            <span class="gourmet-cat-badge">お好み焼き</span>
+            <span class="gourmet-area-badge">枚岡エリア</span>
+          </div>
+          <div class="gourmet-card-name">（店舗情報準備中）</div>
+          <div class="gourmet-card-desc">昭和から続く地元の鉄板焼き。おばちゃんの話が止まらない。</div>
+          <div class="gourmet-card-comment">ここで食べながら、おばちゃんにいろんな相談を聞いてもらっています。</div>
+        </div>
+      </div>
+
+      <div class="gourmet-card">
+        <div class="gourmet-card-photo" style="background:linear-gradient(135deg,#fff8e1,#ffe082);">☕</div>
+        <div class="gourmet-card-body">
+          <div class="gourmet-card-meta">
+            <span class="gourmet-cat-badge">カフェ</span>
+            <span class="gourmet-area-badge">布施エリア</span>
+          </div>
+          <div class="gourmet-card-name">（店舗情報準備中）</div>
+          <div class="gourmet-card-desc">朝活の後に立ち寄る喫茶店。モーニングが充実していて活動前に最適。</div>
+          <div class="gourmet-card-comment">街頭演説の前にここでコーヒーを飲んで気合を入れます。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Instagram埋め込み -->
+<div class="instagram-section">
+  <div class="instagram-inner">
+    <div class="instagram-header">
+      <a href="https://www.instagram.com/kodama.gourmet/" target="_blank" class="instagram-handle">
+        📷 @kodama.gourmet
+      </a>
+      <h2>Instagramでも発信中</h2>
+      <p>東大阪グルメの最新情報はInstagramで随時更新しています</p>
+    </div>
+
+    <!-- Instagram公式埋め込みウィジェット -->
+    <div class="instagram-embed-wrap">
+      <blockquote
+        class="instagram-media"
+        data-instgrm-captioned
+        data-instgrm-permalink="https://www.instagram.com/kodama.gourmet/"
+        data-instgrm-version="14"
+        style="
+          background:#FFF;
+          border:0;
+          border-radius:3px;
+          box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);
+          margin: 0;
+          max-width:540px;
+          min-width:326px;
+          padding:0;
+          width:100%;
+        ">
+        <div style="padding:16px;">
+          <a href="https://www.instagram.com/kodama.gourmet/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);"></div>
+            <div>
+              <div style="font-size:.875rem;font-weight:700;color:#000;">kodama.gourmet</div>
+              <div style="font-size:.75rem;color:#8e8e8e;">こだまグルメ｜東大阪</div>
+            </div>
+          </a>
+          <div style="margin-top:12px;font-size:.875rem;color:#262626;">
+            東大阪の美味しいお店を巡るこだまのグルメアカウントです。<br>
+            地元の個人店を応援しています🍜
+          </div>
+          <a href="https://www.instagram.com/kodama.gourmet/" target="_blank"
+            style="display:inline-block;margin-top:12px;padding:8px 20px;background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);color:white;border-radius:50px;font-size:.82rem;font-weight:700;">
+            Instagramを見る →
+          </a>
+        </div>
+      </blockquote>
+    </div>
+
+    <p style="text-align:center;font-size:0.82rem;color:var(--text-sub);">
+      ※ Instagram埋め込みが表示されない場合は
+      <a href="https://www.instagram.com/kodama.gourmet/" target="_blank" style="color:var(--primary);font-weight:700;">こちら</a>
+      から直接ご覧ください
+    </p>
+  </div>
+</div>
+
+<!-- こだまグルメエリア紹介 -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Area Guide</p>
+    <h2 class="section-title">こだまが歩いた<em>東大阪グルメエリア</em></h2>
+
+    <div class="map-section">
+      <h3>📍 主要グルメエリア</h3>
+      <div class="area-list">
+        <div class="area-item">
+          <div class="area-num">1</div>
+          <div class="area-info">
+            <h4>布施エリア</h4>
+            <p>近鉄布施駅周辺。商店街と飲み屋街が混在する、東大阪の中心グルメゾーン。</p>
+          </div>
+        </div>
+        <div class="area-item">
+          <div class="area-num">2</div>
+          <div class="area-info">
+            <h4>枚岡・東花園エリア</h4>
+            <p>住宅地に溶け込んだ昔ながらの名店が点在。地元民しか知らない穴場が多い。</p>
+          </div>
+        </div>
+        <div class="area-item">
+          <div class="area-num">3</div>
+          <div class="area-info">
+            <h4>河内永和・高井田エリア</h4>
+            <p>工場地帯に近く、職人飯文化が根付く。ボリューム満点の定食屋が充実。</p>
+          </div>
+        </div>
+        <div class="area-item">
+          <div class="area-num">4</div>
+          <div class="area-info">
+            <h4>荒本・長田エリア</h4>
+            <p>市役所周辺からやや南側。新旧が混在するジャンル多様なエリア。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SNS誘導 -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="sns-section" style="background:linear-gradient(135deg,#fff0ef,#fce4f0);">
+      <h2>グルメ情報を毎週更新中！</h2>
+      <p>Instagramをフォローして、最新のこだまグルメをチェック</p>
+      <div class="sns-links-center">
+        <a href="https://www.instagram.com/kodama.gourmet/" target="_blank" class="sns-link instagram">
+          📷 @kodama.gourmet をフォロー
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-name">こだま</div>
+    <div class="footer-sub">東大阪市 ／ 政治家個人サイト</div>
+    <nav class="footer-nav">
+      <a href="index.html">トップ</a>
+      <a href="profile.html">プロフィール</a>
+      <a href="vision.html">政治ビジョン</a>
+      <a href="history.html">選挙実績</a>
+      <a href="gourmet.html">こだまグルメ</a>
+    </nav>
+    <div class="footer-copy">© 2025 こだま All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('nav').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('nav');
+    if (!nav.contains(e.target)) nav.classList.remove('open');
+  });
+
+  // カテゴリータブ
+  const tabs = document.querySelectorAll('.cat-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
