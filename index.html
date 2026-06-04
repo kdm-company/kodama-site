@@ -3,509 +3,699 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>こだま｜東大阪から、あなたと一緒に。</title>
-  <meta name="description" content="東大阪を選挙区とする政治家・こだまの公式サイト。地元密着、誠実な政治を目指します。">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <title>児玉ゆうき｜東大阪と、本気で向き合う。</title>
+  <meta name="description" content="2027年大阪府議会議員選挙・東大阪選挙区。児玉ゆうき（こだま）の公式サイト。">
+
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="児玉ゆうき｜東大阪と、本気で向き合う。">
+  <meta property="og:description" content="2027年大阪府議会議員選挙・東大阪選挙区。東大阪の声を政治に届けるために立ち上がった、児玉ゆうきの公式サイト。">
+  <meta property="og:image" content="images/こだま横長.png">
+  <meta property="og:url" content="https://kdm-company.github.io/kodama-site/">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="児玉ゆうき｜東大阪と、本気で向き合う。">
+  <meta name="twitter:description" content="2027年大阪府議会議員選挙・東大阪選挙区。東大阪の声を政治に届けるために立ち上がった、児玉ゆうきの公式サイト。">
+  <meta name="twitter:image" content="images/こだま横長.png">
+
+  <!-- フォント：システムフォントを使用（Google Fonts接続不要） -->
+  <!-- GitHub Pages公開時にGoogle Fontsを追加する場合はここに挿入 -->
+
   <style>
-    /* ===== トップページ固有スタイル ===== */
+    /* ============================================================
+       CSS VARIABLES — 配色ルール完全準拠
+    ============================================================ */
+    :root {
+      --primary:        #00388D;
+      --primary-dark:   #002B6B;
+      --primary-hover:  #002F78;
+      --primary-soft:   #EAF2FF;
+      --bg:             #F8FAFC;
+      --surface:        #FFFFFF;
+      --text:           #111827;
+      --text-sub:       #4B5563;
+      --border:         #D8E2F3;
+      --accent-yellow:  #FBBF24;
+      --cta-red:        #DC2626;
+      --cta-red-hover:  #B91C1C;
+      --radius-sm:      6px;
+      --radius:         12px;
+      --radius-lg:      20px;
+      --shadow:         0 2px 12px rgba(0,56,141,0.08);
+      --shadow-md:      0 4px 24px rgba(0,56,141,0.12);
+      --max-w:          720px;
+      --nav-h:          64px;
+    }
 
-    /* ファーストビュー */
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+
+    /* リンクルール */
+    a { color: var(--primary); text-decoration: underline; }
+    a:hover { color: var(--primary-hover); }
+
+    /* フォーカス */
+    :focus-visible {
+      outline: 3px solid var(--accent-yellow);
+      outline-offset: 3px;
+    }
+
+    /* ============================================================
+       NAV — 白背景、ロゴ青、文字黒
+    ============================================================ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+      box-shadow: 0 1px 8px rgba(0,56,141,0.06);
+    }
+    .nav-logo {
+      font-size: 1.1rem; font-weight: 900;
+      color: var(--primary); letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2px; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 700;
+      padding: 7px 14px; border-radius: 50px;
+      color: var(--text); text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); background: var(--primary-soft); }
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 6px;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px; transition: all 0.3s;
+    }
+    .nav.open .nav-links {
+      display: flex; flex-direction: column;
+      position: absolute; top: var(--nav-h); left: 0; right: 0;
+      background: var(--surface);
+      padding: 12px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      gap: 2px;
+    }
+    .nav.open .nav-links a { font-size: 1rem; padding: 13px 16px; }
+
+    /* ============================================================
+       HERO — #00388D背景・白コピー・黄CTAボタン
+    ============================================================ */
     .hero {
-      background: linear-gradient(160deg, #0d3f72 0%, #1a5c9a 50%, #2471b8 100%);
-      color: white;
-      padding: 60px 24px 80px;
       position: relative;
+      min-height: 100vh;
+      background: #001f52;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+    /* 写真 — 全面クリアに表示、何も被せない */
+    .hero-photo-bg {
+      position: absolute; inset: 0;
+      background: url('images/こだま横長.png') center 15% / cover no-repeat;
+      opacity: 1;
+    }
+    /* 斜線＋下部グラデーション */
+    .hero-overlay {
+      position: absolute; inset: 0;
       overflow: hidden;
     }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      bottom: -40px; left: -40px;
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
+    .hero-overlay svg {
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 45%;
     }
-
-    .hero::after {
+    /* 下部30%に水平青グラデーション */
+    .hero-overlay::after {
       content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.03);
+      position: absolute; left: 0; right: 0;
+      bottom: 0; height: 35%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,56,141,0) 0%,
+        rgba(0,56,141,0.35) 45%,
+        rgba(0,56,141,0.75) 100%
+      );
+      pointer-events: none;
     }
-
     .hero-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-area-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 50px;
-      padding: 5px 14px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin-bottom: 28px;
-      letter-spacing: 0.05em;
-    }
-
-    .hero-layout {
-      display: flex;
-      align-items: flex-end;
-      gap: 28px;
-    }
-
-    .hero-photo {
-      width: 140px;
-      height: 175px;
-      border-radius: 16px;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 3px solid rgba(255,255,255,0.3);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-
-    .hero-photo-img {
+      position: relative; z-index: 1;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      padding: 0 48px 72px 56px;
+      box-sizing: border-box;
     }
-
-    .hero-text {
-      flex: 1;
-    }
-
-    .hero-name-en {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      opacity: 0.65;
-      margin-bottom: 4px;
-    }
-
-    .hero-name {
-      font-size: clamp(2.8rem, 10vw, 4.5rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 0.95;
-      margin-bottom: 16px;
-    }
-
-    .hero-name span {
-      display: block;
-      font-size: clamp(1rem, 3vw, 1.4rem);
-      letter-spacing: 0.05em;
-      font-weight: 700;
-      opacity: 0.8;
-      margin-bottom: 4px;
-    }
-
-    .hero-catch {
-      font-size: clamp(1rem, 3.5vw, 1.25rem);
-      font-weight: 700;
-      line-height: 1.5;
-      opacity: 0.95;
-    }
-
-    .hero-catch em {
-      color: #ffd966;
-      font-style: normal;
-    }
-
-    .hero-cta {
-      margin-top: 36px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* ニュースバー */
-    .news-bar {
-      background: var(--primary);
-      color: white;
-      padding: 14px 20px;
-    }
-
-    .news-bar-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .news-bar-label {
-      background: var(--accent);
-      color: white;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 4px;
-      flex-shrink: 0;
-      letter-spacing: 0.05em;
-    }
-
-    .news-bar-text {
-      font-size: 0.88rem;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* ナビカード */
-    .nav-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .nav-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 20px 16px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-      display: block;
-    }
-
-    .nav-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--primary);
-    }
-
-    .nav-card-icon {
-      font-size: 1.8rem;
-      margin-bottom: 8px;
-    }
-
-    .nav-card-title {
-      font-size: 0.95rem;
-      font-weight: 900;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .nav-card-desc {
-      font-size: 0.78rem;
-      color: var(--text-sub);
-    }
-
-    /* 最新情報 */
-    .news-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .news-item {
-      display: flex;
-      gap: 12px;
-      padding: 16px;
-      background: white;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      transition: border-color 0.2s;
-    }
-
-    .news-item:hover {
-      border-color: var(--primary);
-    }
-
-    .news-date {
-      font-size: 0.78rem;
-      color: var(--text-sub);
-      font-weight: 700;
-      flex-shrink: 0;
-      padding-top: 2px;
-    }
-
-    .news-title {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    /* SNSセクション */
-    .sns-section {
-      background: linear-gradient(135deg, var(--primary-light), #f0f4ff);
-      border-radius: var(--radius-lg);
-      padding: 32px 24px;
-      text-align: center;
-    }
-
-    .sns-section h2 {
-      font-size: 1.2rem;
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-
-    .sns-section p {
-      font-size: 0.88rem;
-      color: var(--text-sub);
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 5px 16px;
+      font-size: 0.72rem; font-weight: 700;
+      color: #EAF2FF; letter-spacing: 0.1em;
       margin-bottom: 20px;
     }
+    .hero-name-sub {
+      font-size: 1rem; font-weight: 400;
+      color: #EAF2FF; letter-spacing: 0.2em;
+      margin-bottom: 4px;
+    }
+    .hero-name {
+      font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+      font-weight: 900; letter-spacing: -0.02em; line-height: 0.95;
+      color: #FFFFFF; margin-bottom: 20px;
+      text-align: left;
+      text-shadow:
+        0 2px 16px rgba(0,56,141,0.85),
+        0 4px 32px rgba(0,56,141,0.6),
+        0 1px 4px rgba(0,0,0,0.5);
+    }
+    .hero-catch {
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      font-weight: 700; color: #FFFFFF;
+      line-height: 1.5; margin-bottom: 32px;
+      text-align: left;
+      text-shadow:
+        0 2px 12px rgba(0,56,141,0.85),
+        0 4px 24px rgba(0,56,141,0.6),
+        0 1px 3px rgba(0,0,0,0.45);
+    }
+    /* 黄色CTA — FVのみ */
+    .btn-yellow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 30px; border-radius: 50px;
+      background: var(--accent-yellow);
+      color: var(--primary); /* #00388D文字 */
+      font-size: 0.92rem; font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(251,191,36,0.4);
+      transition: all 0.2s;
+    }
+    .btn-yellow:hover {
+      background: #F59E0B;
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(251,191,36,0.5);
+    }
+    .btn-ghost-white {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 14px 28px; border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.5);
+      color: #FFFFFF; font-size: 0.9rem; font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost-white:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.8);
+      color: #FFFFFF;
+    }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    .sns-links-center {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    /* ============================================================
+       SECTION BASE
+    ============================================================ */
+    .section { padding: 80px 0; background: var(--surface); border-top: 4px solid var(--surface); }
+    .section-bg { padding: 80px 0; background: var(--bg); }
+    .section-blue-soft { padding: 80px 0; background: var(--primary-soft); }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+    /* 見出しパターン */
+    .sec-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--primary);
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 10px;
+    }
+    .sec-label::before {
+      content: ''; display: block; width: 18px; height: 2px;
+      background: var(--primary);
+    }
+    .sec-title {
+      font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+      font-weight: 900; letter-spacing: -0.02em; line-height: 1.2;
+      color: var(--text); margin-bottom: 36px;
+    }
+    .sec-title span { color: var(--primary); }
+
+    /* Primary Button */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 13px 26px; border-radius: 50px;
+      background: var(--primary); color: #FFFFFF;
+      font-size: 0.9rem; font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0,56,141,0.3);
     }
 
-    /* メッセージ */
+    /* ============================================================
+       PROFILE — 白背景
+    ============================================================ */
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 36px; align-items: start;
+      margin-bottom: 48px;
+    }
+    .profile-photo {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      aspect-ratio: 4/5;
+    }
+    .profile-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+    }
+    .profile-name {
+      font-size: 1.9rem; font-weight: 900;
+      color: var(--text); margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .profile-kana {
+      font-size: 0.82rem; color: var(--text-sub);
+      letter-spacing: 0.1em; margin-bottom: 14px;
+    }
+    .profile-tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .tag {
+      font-size: 0.72rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 50px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+    .profile-bio {
+      font-size: 0.95rem; color: var(--text);
+      line-height: 1.9; max-width: 100%;
+    }
+
+    /* 経歴テーブル */
+    .career-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 32px;
+      background: var(--surface);
+    }
+    .career-row {
+      display: grid; grid-template-columns: 120px 1fr;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .career-row:last-child { border-bottom: none; }
+    .career-row:hover { background: var(--bg); }
+    .career-row.dim { opacity: 0.45; }
+    .career-row.highlight { background: var(--primary-soft); }
+    .career-date {
+      padding: 14px 16px;
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--primary); letter-spacing: 0.02em;
+      border-right: 1px solid var(--border);
+      display: flex; align-items: center;
+      white-space: nowrap;
+    }
+    .career-row.highlight .career-date { color: var(--primary); }
+    .career-content {
+      padding: 14px 18px;
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--text);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .career-content small {
+      display: block; font-size: 0.76rem;
+      font-weight: 400; color: var(--text-sub); margin-top: 3px;
+    }
+    .career-row.highlight .career-content { color: var(--primary); font-weight: 900; }
+
+    /* 資格バッジ */
+    .license-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .license-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--text-sub);
+    }
+
+    /* ============================================================
+       MESSAGE — #00388D背景
+    ============================================================ */
     .message-section {
       background: var(--primary);
-      color: white;
-      padding: 56px 24px;
+      padding: 80px 0;
     }
-
-    .message-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-    }
-
-    .message-quote {
-      font-size: clamp(1.3rem, 4vw, 1.8rem);
-      font-weight: 900;
-      line-height: 1.5;
+    .message-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #EAF2FF;
+      display: flex; align-items: center; gap: 8px;
       margin-bottom: 20px;
     }
-
-    .message-quote em {
-      color: #ffd966;
-      font-style: normal;
+    .message-label::before {
+      content: ''; display: block; width: 18px; height: 2px;
+      background: rgba(255,255,255,0.4);
+    }
+    .message-quote {
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-weight: 900; line-height: 1.55;
+      color: #FFFFFF; margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+    .message-body {
+      font-size: 0.95rem; font-weight: 400;
+      color: #EAF2FF; line-height: 2;
+    }
+    .message-body p + p { margin-top: 14px; }
+    .message-sign {
+      margin-top: 28px;
+      font-size: 0.85rem; font-weight: 700;
+      color: rgba(255,255,255,0.55);
     }
 
-    .message-text {
-      font-size: 0.95rem;
-      opacity: 0.85;
-      line-height: 1.8;
+    /* ============================================================
+       SNS — #F8FAFC背景
+    ============================================================ */
+    .sns-list { display: flex; flex-direction: column; gap: 10px; }
+    .sns-card {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: var(--shadow);
+    }
+    .sns-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px rgba(0,56,141,0.12);
+      transform: translateY(-2px);
+    }
+    .sns-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .sns-info { flex: 1; }
+    .sns-platform {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-sub);
+      margin-bottom: 2px;
+    }
+    .sns-handle {
+      font-size: 0.95rem; font-weight: 700; color: var(--text);
+    }
+    .sns-desc { font-size: 0.76rem; color: var(--text-sub); margin-top: 1px; }
+    .sns-arrow { color: var(--primary); font-size: 1rem; transition: transform 0.2s; }
+    .sns-card:hover .sns-arrow { transform: translateX(4px); }
+
+    /* ============================================================
+       FOOTER — #002B6B背景
+    ============================================================ */
+    .footer {
+      background: var(--primary-dark);
+      padding: 48px 24px 32px;
+    }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+    .footer-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 20px;
       margin-bottom: 24px;
     }
-
-    .message-sign {
-      font-size: 0.88rem;
-      opacity: 0.65;
-      font-weight: 700;
+    .footer-name {
+      font-size: 1.1rem; font-weight: 900;
+      color: #FFFFFF; margin-bottom: 4px;
+    }
+    .footer-sub { font-size: 0.76rem; color: #EAF2FF; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 2px; }
+    .footer-nav a {
+      font-size: 0.8rem; font-weight: 600;
+      padding: 6px 12px; border-radius: 50px;
+      color: #FFFFFF; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .footer-nav a:hover { background: rgba(255,255,255,0.12); color: #FFFFFF; }
+    .footer-copy {
+      font-size: 0.7rem; color: #EAF2FF;
+      opacity: 0.5;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.12);
     }
 
-    @media (max-width: 480px) {
-      .hero-layout {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-      }
+    /* fade-in は常に表示（アニメーションなし） */
+    .fade-in { opacity: 1; transform: none; }
+    .fade-in.visible { opacity: 1; }
 
-      .hero-photo {
-        width: 120px;
-        height: 150px;
-      }
-
-      .nav-cards {
-        grid-template-columns: 1fr 1fr;
-      }
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .nav { padding: 0 20px; }
+      .hero-inner { padding: 0 24px 64px; }
+      .profile-layout { grid-template-columns: 1fr; }
+      .profile-photo { max-width: 150px; margin: 0 auto; }
+      .profile-name { text-align: center; }
+      .profile-kana { text-align: center; }
+      .profile-tags { justify-content: center; }
+      .career-date { font-size: 0.7rem; padding: 12px 10px; }
+      .career-content { font-size: 0.84rem; padding: 12px 14px; }
+      .footer-top { flex-direction: column; }
+      .section { padding: 60px 0; }
+      .section-bg { padding: 60px 0; }
+      .section-blue-soft { padding: 60px 0; }
+      .message-section { padding: 60px 0; }
     }
   </style>
 </head>
 <body>
 
-<!-- ナビゲーション -->
+<!-- ============================================================
+     NAV — 白背景
+============================================================ -->
 <nav class="nav" id="nav">
-  <a href="index.html" class="nav-logo">こ<span>だ</span>ま</a>
-  <div class="nav-menu">
-    <a href="index.html" class="active">トップ</a>
-    <a href="profile.html">プロフィール</a>
-    <a href="vision.html">政治ビジョン</a>
-    <a href="history.html">選挙実績</a>
-    <a href="gourmet.html">グルメ</a>
+  <a href="#top" class="nav-logo">こだま</a>
+  <div class="nav-links">
+    <a href="#profile">プロフィール</a>
+    <a href="#message">想い</a>
+    <a href="#sns">SNS</a>
   </div>
   <div class="nav-toggle" onclick="toggleNav()">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
-<!-- ファーストビュー -->
-<section class="hero">
+<!-- ============================================================
+     HERO — #00388D背景・白コピー・黄CTA
+============================================================ -->
+<section class="hero" id="top">
+  <div class="hero-photo-bg" role="img" aria-label="東大阪の街を歩く児玉ゆうきの写真"></div>
+  <!-- グラデなし斜線エリア：左下から右上へ約10度 -->
+  <div class="hero-overlay">
+    <svg viewBox="0 0 1000 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,300 0,220 1000,140 1000,300" fill="rgba(0,56,141,0.55)"/>
+    </svg>
+  </div>
   <div class="hero-inner">
-    <div class="hero-area-tag">
-      📍 東大阪から、日本を変える
+    <h1 class="hero-name">こだま ゆうき</h1>
+    <p class="hero-catch">東大阪と、本気で向き合う。</p>
+    <div class="hero-cta">
+      <!-- FV唯一の黄色CTA -->
+      <a href="#profile" class="btn-yellow">プロフィールを読む →</a>
+      <a href="#message" class="btn-ghost-white">想いを聞く</a>
     </div>
-    <div class="hero-layout">
-      <div class="hero-photo photo-placeholder" style="background: linear-gradient(135deg,#2471b8,#0d3f72);">
-        <!-- 顔写真をここに差し替え -->
-        <!-- <img src="images/kodama.jpg" alt="こだま" class="hero-photo-img"> -->
-        <div style="text-align:center;color:rgba(255,255,255,0.6);font-size:0.75rem;padding:12px;">
-          顔写真<br>準備中
-        </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROFILE — 白背景
+============================================================ -->
+<section class="section" id="profile">
+  <div class="container">
+    <p class="sec-label fade-in">Profile</p>
+    <h2 class="sec-title fade-in delay-1">
+      児玉ゆうきとは、<br><span>どんな人物か。</span>
+    </h2>
+
+    <div class="profile-layout fade-in delay-2">
+      <div class="profile-photo">
+        <img src="images/こだまプロフ.png" alt="児玉ゆうき">
       </div>
-      <div class="hero-text">
-        <p class="hero-name-en">Kodama Official</p>
-        <h1 class="hero-name">
-          <span>政治家</span>こだま
-        </h1>
-        <p class="hero-catch">
-          <em>東大阪の声</em>を、<br>
-          政治の力に変える。
+      <div>
+        <div class="profile-name">児玉ゆうき</div>
+        <div class="profile-kana">こだま ゆうき　1998年6月27日生</div>
+        <div class="profile-tags">
+          <span class="tag">📍 東大阪市</span>
+          <span class="tag">起業家</span>
+          <span class="tag">政治家</span>
+        </div>
+        <p class="profile-bio">
+          起業後、東大阪の製造業の社長たちとの交流を通じて、この街の社会課題と政治の現状を知った。現場の人たちの声を、政治に届けたい。その一心で、東大阪に関わり続けている。
         </p>
       </div>
     </div>
-    <div class="hero-cta">
-      <a href="profile.html" class="btn" style="background:white;color:var(--primary);font-weight:900;">
-        こだまを知る →
-      </a>
-      <a href="vision.html" class="btn" style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);">
-        政治ビジョン
-      </a>
+
+    <p class="sec-label fade-in">Career</p>
+    <div class="career-wrap fade-in delay-1">
+      <div class="career-row">
+        <div class="career-date">2018年3月</div>
+        <div class="career-content">南大阪高等職業技術専門校 情報通信科 卒業</div>
+      </div>
+      <div class="career-row">
+        <div class="career-date">2018年4月</div>
+        <div class="career-content">
+          日新ネットワークス株式会社 入社
+          <small>ビル管理システムの運用保守を担当　／　2020年1月 退社</small>
+        </div>
+      </div>
+      <div class="career-row">
+        <div class="career-date">2021年6月</div>
+        <div class="career-content">個人事業を開業（Webデザイン）</div>
+      </div>
+      <div class="career-row">
+        <div class="career-date">2021年10月</div>
+        <div class="career-content">
+          片山大介事務所 秘書 就任
+          <small>同行・SNS運用・事務を担当　／　2023年2月 退任</small>
+        </div>
+      </div>
+      <div class="career-row">
+        <div class="career-date">2023年</div>
+        <div class="career-content">東大阪市議会議員選挙 無所属で立候補（落選）</div>
+      </div>
+      <div class="career-row">
+        <div class="career-date">2025年4月</div>
+        <div class="career-content">
+          株式会社KDM 設立・代表取締役 就任
+          <small>動画制作・HP制作</small>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- ニュースバー -->
-<div class="news-bar">
-  <div class="news-bar-inner">
-    <span class="news-bar-label">NEW</span>
-    <span class="news-bar-text">東大阪市内の街頭活動レポートを公開しました</span>
+<!-- ============================================================
+     MESSAGE — #00388D背景・白文字
+============================================================ -->
+<div class="message-section" id="message">
+  <div class="container">
+    <p class="message-label fade-in">Message</p>
+    <p class="message-quote fade-in delay-1">
+      「この街の悪循環を、<br>根本から止めたい。」
+    </p>
+    <div class="message-body fade-in delay-2">
+      <p>少子化が進み、若者が減り、後継者がいなくなって廃業する。市内の雇用が減れば、さらに若者が外へ出ていく——東大阪はいま、この悪循環の中にあります。</p>
+      <p>表面的な対策を積み重ねても、この流れは止まりません。根本にあるのは、地元で働き続けられる場がないことです。東大阪が誇る製造業をはじめとした地元企業が元気であれば、若者が残り、雇用が生まれ、子どもを産み育てられる街になる。企業の活性化こそが、すべての課題への根本解決だと考えています。</p>
+      <p>難しい制度論より先に、この街で生きる人たちの現実を変える。それが私の政治の出発点です。</p>
+    </div>
+    <p class="message-sign fade-in delay-3">— 児玉ゆうき</p>
   </div>
 </div>
 
-<!-- ページ導線 -->
-<section class="section">
+<!-- ============================================================
+     SNS — #F8FAFC背景
+============================================================ -->
+<section class="section-bg" id="sns">
   <div class="container">
-    <p class="section-label">Site Navigation</p>
-    <h2 class="section-title">サイトメニュー</h2>
-    <div class="nav-cards">
-      <a href="profile.html" class="nav-card">
-        <div class="nav-card-icon">👤</div>
-        <div class="nav-card-title">プロフィール</div>
-        <div class="nav-card-desc">こだまの経歴・人柄・地元との関わり</div>
+    <p class="sec-label fade-in">SNS &amp; Links</p>
+    <h2 class="sec-title fade-in delay-1">SNSで<span>つながる</span></h2>
+    <div class="sns-list">
+      <a href="https://www.instagram.com/kodama_osaka/" target="_blank" rel="noopener noreferrer" class="sns-card fade-in">
+        <div class="sns-icon" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);">📷</div>
+        <div class="sns-info">
+          <div class="sns-platform">Instagram</div>
+          <div class="sns-handle">@kodama_osaka</div>
+          <div class="sns-desc">活動報告・日々のこと</div>
+        </div>
+        <span class="sns-arrow">→</span>
       </a>
-      <a href="vision.html" class="nav-card">
-        <div class="nav-card-icon">🏛️</div>
-        <div class="nav-card-title">政治ビジョン</div>
-        <div class="nav-card-desc">主張・政策の方向性・なぜ政治を志すのか</div>
+      <a href="https://www.instagram.com/kodama.gourmet/" target="_blank" rel="noopener noreferrer" class="sns-card fade-in delay-1">
+        <div class="sns-icon" style="background:linear-gradient(135deg,#ff7043,#e8483d);">🍜</div>
+        <div class="sns-info">
+          <div class="sns-platform">Instagram</div>
+          <div class="sns-handle">@kodama.gourmet</div>
+          <div class="sns-desc">東大阪グルメ巡り</div>
+        </div>
+        <span class="sns-arrow">→</span>
       </a>
-      <a href="history.html" class="nav-card">
-        <div class="nav-card-icon">📋</div>
-        <div class="nav-card-title">選挙実績</div>
-        <div class="nav-card-desc">過去の選挙・活動の記録</div>
-      </a>
-      <a href="gourmet.html" class="nav-card">
-        <div class="nav-card-icon">🍜</div>
-        <div class="nav-card-title">こだまグルメ</div>
-        <div class="nav-card-desc">東大阪の美味しいお店を紹介</div>
+      <a href="https://note.com/kodama_yuuki" target="_blank" rel="noopener noreferrer" class="sns-card fade-in delay-2">
+        <div class="sns-icon" style="background:#41c9b4;">📝</div>
+        <div class="sns-info">
+          <div class="sns-platform">note</div>
+          <div class="sns-handle">kodama_yuuki</div>
+          <div class="sns-desc">コラム・想い・考え</div>
+        </div>
+        <span class="sns-arrow">→</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- こだまからのメッセージ -->
-<div class="message-section">
-  <div class="message-inner">
-    <p class="message-quote">
-      「<em>普通の人の声</em>が、<br>
-      政治に届かない社会を<br>
-      変えたい。」
-    </p>
-    <p class="message-text">
-      東大阪に生まれ、この街で育ちました。商店街の活気、ものづくりの誇り、子育て世代の不安——<br>
-      そのすべてを肌で知っているからこそ、私は立ちました。<br>
-      難しい言葉ではなく、行動で示す政治を目指します。
-    </p>
-    <p class="message-sign">— こだま</p>
-    <div style="margin-top:24px;">
-      <a href="profile.html" class="btn" style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);">
-        もっと読む
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- 最新情報 -->
-<section class="section">
-  <div class="container">
-    <p class="section-label">Latest News</p>
-    <h2 class="section-title">最新情報</h2>
-    <div class="news-list">
-      <div class="news-item">
-        <span class="news-date">2025.11.15</span>
-        <span class="news-title">布施駅前で街頭演説を行いました</span>
-      </div>
-      <div class="news-item">
-        <span class="news-date">2025.10.28</span>
-        <span class="news-title">東大阪市立小学校の授業参観に参加しました</span>
-      </div>
-      <div class="news-item">
-        <span class="news-date">2025.10.12</span>
-        <span class="news-title">地元商工会議所との意見交換会に出席しました</span>
-      </div>
-      <div class="news-item">
-        <span class="news-date">2025.09.30</span>
-        <span class="news-title">Instagram アカウントを開設しました</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SNS -->
-<section class="section section-bg">
-  <div class="container">
-    <div class="sns-section">
-      <h2>SNSでも発信中</h2>
-      <p>日々の活動・東大阪グルメ情報を随時更新しています</p>
-      <div class="sns-links-center">
-        <a href="https://www.instagram.com/kodama.gourmet/" target="_blank" class="sns-link instagram">
-          📷 Instagram
-        </a>
-        <a href="#" class="sns-link x">
-          𝕏 X (Twitter)
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- フッター -->
+<!-- ============================================================
+     FOOTER — #002B6B背景
+============================================================ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-name">こだま</div>
-    <div class="footer-sub">東大阪市 ／ 政治家個人サイト</div>
-    <nav class="footer-nav">
-      <a href="index.html">トップ</a>
-      <a href="profile.html">プロフィール</a>
-      <a href="vision.html">政治ビジョン</a>
-      <a href="history.html">選挙実績</a>
-      <a href="gourmet.html">こだまグルメ</a>
-    </nav>
-    <div class="footer-copy">© 2025 こだま All rights reserved.</div>
+    <div class="footer-top">
+      <div>
+        <div class="footer-name">児玉ゆうき（こだま）</div>
+        <div class="footer-sub">2027年 大阪府議会議員選挙・東大阪選挙区 出馬予定</div>
+      </div>
+      <nav class="footer-nav">
+        <a href="#top">トップ</a>
+        <a href="#profile">プロフィール</a>
+        <a href="#message">想い</a>
+        <a href="#sns">SNS</a>
+      </nav>
+    </div>
+    <div class="footer-copy">© <span id="year"></span> 児玉ゆうき All rights reserved.</div>
   </div>
 </footer>
 
 <script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
   function toggleNav() {
     document.getElementById('nav').classList.toggle('open');
   }
-  // ナビ外クリックで閉じる
   document.addEventListener('click', function(e) {
     const nav = document.getElementById('nav');
-    if (!nav.contains(e.target)) {
-      nav.classList.remove('open');
-    }
+    if (!nav.contains(e.target)) nav.classList.remove('open');
   });
+
+  // フェードイン（threshold:0 で要素が1pxでも見えたら即表示）
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+  fadeEls.forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
